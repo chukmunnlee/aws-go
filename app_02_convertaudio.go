@@ -94,6 +94,7 @@ func ConvertAudio(ctx context.Context, sns events.SNSEvent) (string, error) {
 			Bucket: aws.String(os.Getenv(S3_OUTPUT_BUCKET)),
 			Key: aws.String(audioFile),
 			Body: pollyOutput.AudioStream,
+			ACL: aws.String("public-read"),
 		},
 	)
 
