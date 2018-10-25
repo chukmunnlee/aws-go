@@ -20,3 +20,7 @@ type NewPostEvent struct {
 	Text string `json:"text"`
 	Voice string `json:"voice"`
 }
+
+type GetPostEvent struct {
+	PostId string `json:"postId"`
+}
