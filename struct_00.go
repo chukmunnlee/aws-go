@@ -11,7 +11,7 @@ const (
 
 type PostItem struct {
 	Id string `json:"id"`
-	Status string `json:"status"`
+	Stage string `json:"stage"`
 	Text string `json:"text"`
 	Voice string `json:"voice"`
 }

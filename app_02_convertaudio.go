@@ -6,26 +6,22 @@ import (
 	"os"
 	"context"
 	"errors"
-	//"github.com/satori/go.uuid"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/polly"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
-	//"github.com/aws/aws-sdk-go/service/sns"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-lambda-go/events"
 )
 
 // see struct_00.go for data structure
 
-//func convertaudio(ctx context.Context, lulu ??) {
 func ConvertAudio(ctx context.Context, sns events.SNSEvent) (string, error) {
 
 	id := sns.Records[0].SNS.Message
 
-	//log.Printf("Generating id: %s\n", uuid.String())
 	log.Printf("Processing id: %s\n", id)
 	log.Printf("** REGION_AWS: %s \n", os.Getenv(REGION_AWS))
 	log.Printf("** DB_TABLE_NAME: %s \n", os.Getenv(DB_TABLE_NAME))
@@ -38,9 +34,8 @@ func ConvertAudio(ctx context.Context, sns events.SNSEvent) (string, error) {
 	})
 
 	if (nil != err) {
-		//return "", err
-		log.Fatalf("%v\n", err)
-		os.Exit(-1)
+		return "", err
+		//log.Fatalf("%v\n", err)
 	}
 
 	ddbSess := dynamodb.New(sess)
@@ -52,9 +47,7 @@ func ConvertAudio(ctx context.Context, sns events.SNSEvent) (string, error) {
 		},
 	})
 	if (nil != err) {
-		//return "", err
-		log.Fatalf("%v\n", err)
-		os.Exit(-1)
+		return "", err
 	}
 
 	log.Printf("Dynamodb: GetItem: %v\n", result.Item)
@@ -64,7 +57,6 @@ func ConvertAudio(ctx context.Context, sns events.SNSEvent) (string, error) {
 	if (nil != err) {
 		//return "", err
 		log.Fatalf("%v\n", err)
-		os.Exit(-1)
 	}
 
 	log.Printf("Dynamodb: UnmarshalMap: %v\n", postItem)
@@ -82,9 +74,7 @@ func ConvertAudio(ctx context.Context, sns events.SNSEvent) (string, error) {
 		},
 	)
 	if (nil != err) {
-		//return "", err
-		log.Fatalf("%v\n", err)
-		os.Exit(-1)
+		return "", err
 	}
 
 	log.Printf("Polly: SynthesizeSpeech: %v\n", pollyOutput);
@@ -93,9 +83,7 @@ func ConvertAudio(ctx context.Context, sns events.SNSEvent) (string, error) {
 		Region: aws.String(os.Getenv(S3_OUTPUT_BUCKET_REGION)),
 	})
 	if (nil != err) {
-		//return "", err
-		log.Fatalf("%v\n", err)
-		os.Exit(-1)
+		return "", err
 	}
 
 	audioFile := fmt.Sprintf("%s.mp3", postItem.Id)
@@ -110,11 +98,29 @@ func ConvertAudio(ctx context.Context, sns events.SNSEvent) (string, error) {
 	)
 
 	if (nil != err) {
-		log.Fatalf("%v\n", err)
-		os.Exit(-1)
+		return "", err
 	}
 
 	log.Printf("S3: Upload: %s\n", audioFile)
+
+	updateItemInput := &dynamodb.UpdateItemInput{
+		TableName: aws.String(os.Getenv(DB_TABLE_NAME)),
+		Key: map[string]* dynamodb.AttributeValue{
+			"id": {  S: aws.String(id) },
+		},
+		ExpressionAttributeValues: map[string]* dynamodb.AttributeValue{
+			":stage": { S: aws.String("COMPLETED") },
+		},
+		UpdateExpression: aws.String("SET stage = :stage"),
+		ReturnValues: aws.String("UPDATED_OLD"),
+	}
+
+	updateResult, err := ddbSess.UpdateItemWithContext(ctx, updateItemInput)
+	if (nil != err) {
+		return "", err
+	}
+
+	log.Printf("Dynamodb: UpdateItem: %v\n", updateResult)
 
 	return audioFile, nil
 }

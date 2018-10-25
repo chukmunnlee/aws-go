@@ -33,7 +33,7 @@ func NewPost(ctx context.Context, newPostEvent NewPostEvent) (string, error) {
 
 	postItem := PostItem{
 		Id: uuid.String(),
-		Status: "PROCESSING",
+		Stage: "PROCESSING",
 		Text: newPostEvent.Text,
 		Voice: newPostEvent.Voice,
 	}
