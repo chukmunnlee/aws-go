@@ -11,6 +11,8 @@ Resources:
       Properties:
          Runtime: go1.x
          Handler: hello
+         #Runtime: nodejs8.10
+         #Handler: index.handler
          Environment:
             Variables:
                HELLO_AWS_REGION: ap-southeast-1
@@ -21,4 +23,4 @@ Resources:
                Type: Api
                Properties:
                   Path: /hello
-                  Method: GET
+                  Method: get

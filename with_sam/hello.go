@@ -21,14 +21,15 @@ const (
 )
 
 type HelloRequest struct {
-	UserId string `json:userId`
-	Message string `json:message`
+	UserId string `json:"userId"`
+	Message string `json:"message"`
 }
 
 type HelloResponse struct {
-	ResponseId string `json:respondId`
-	Time time.Time `json:time`
-	Message string `json:message`
+	ResponseId string `json:"respondId"`
+	Time time.Time `json:"time"`
+	Message string `json:"message"`
+	Status int `json:"statusCode"`
 }
 
 func CheckError(err error) {
@@ -44,8 +45,6 @@ func HandleRequest(ctx context.Context, req HelloRequest) (HelloResponse, error)
 	if ((len(req.Message) <= 0) || (len(req.UserId) <= 0)) {
 		return resp, errors.New("Invalid request")
 	}
-
-	log.Printf("Request: %v\n", req)
 
 	respId := uuid.Must(uuid.NewV4())
 	prefix := respId.String()[:6]
@@ -73,7 +72,9 @@ func HandleRequest(ctx context.Context, req HelloRequest) (HelloResponse, error)
 		ResponseId: respId.String(), 
 		Time: currTime,
 		Message: fmt.Sprintf("Hello %s: Filename: %s", req.UserId, fileName), 
+		Status: 200,
 	}
+
 	return resp, nil
 }
 
