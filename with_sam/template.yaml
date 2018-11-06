@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Transform: AWS::Serverless-2016-10-31
+
+Description: |
+   My first SAM App
+
+Resources:
+   HelloS3:
+      Type: AWS::Serverless::Function
+      Properties:
+         Runtime: go1.x
+         Handler: hello
+         Environment:
+            Variables:
+               HELLO_AWS_REGION: ap-southeast-1
+               HELLO_BUCKET_NAME: telokanson
+         Role: S3-Admin-Access
+         Events:
+            HelloEvent:
+               Type: Api
+               Properties:
+                  Path: /hello
+                  Method: GET
