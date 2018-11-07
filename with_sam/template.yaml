@@ -23,4 +23,4 @@ Resources:
                Type: Api
                Properties:
                   Path: /hello
-                  Method: get
+                  Method: GET

@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"log"
 	"time"
+	//"errors"
 	"strings"
-	"errors"
+	"encoding/json"
 	"github.com/satori/go.uuid"
 	"os"
 	"context"
@@ -13,6 +14,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/aws/aws-lambda-go/events"
 )
 
 const (
@@ -29,7 +31,6 @@ type HelloResponse struct {
 	ResponseId string `json:"respondId"`
 	Time time.Time `json:"time"`
 	Message string `json:"message"`
-	Status int `json:"statusCode"`
 }
 
 func CheckError(err error) {
@@ -38,18 +39,26 @@ func CheckError(err error) {
 	}
 }
 
-func HandleRequest(ctx context.Context, req HelloRequest) (HelloResponse, error) {
+//func HandleRequest(ctx context.Context, req HelloRequest) (HelloResponse, error) {
+func HandleRequest(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
-	var resp  HelloResponse
+	var resp events.APIGatewayProxyResponse
 
-	if ((len(req.Message) <= 0) || (len(req.UserId) <= 0)) {
-		return resp, errors.New("Invalid request")
+	userId, _ := req.QueryStringParameters["userId"]
+	message, _ := req.QueryStringParameters["message"]
+
+	if ((len(userId) <= 0) || (len(message) <= 0)) {
+		resp = events.APIGatewayProxyResponse{
+			StatusCode: 400,
+			Body: "Missing userId or message",
+		}
+		return resp, nil
 	}
 
 	respId := uuid.Must(uuid.NewV4())
 	prefix := respId.String()[:6]
 	currTime := time.Now()
-	fileName := fmt.Sprintf("%s-%s", prefix, req.UserId)
+	fileName := fmt.Sprintf("%s-%s", prefix, userId)
 
 	log.Printf("AWS Region: %s\n", os.Getenv(HELLO_AWS_REGION))
 	log.Printf("Bucket name: %s\n", os.Getenv(HELLO_BUCKET_NAME))
@@ -65,17 +74,26 @@ func HandleRequest(ctx context.Context, req HelloRequest) (HelloResponse, error)
 	_, err = uploader.UploadWithContext(ctx, &s3manager.UploadInput{
 		Bucket: aws.String(os.Getenv(HELLO_BUCKET_NAME)),
 		Key: aws.String(fileName),
-		Body: strings.NewReader(fmt.Sprintf("Date: %v: Message: %s", currTime, req.Message)),
+		Body: strings.NewReader(fmt.Sprintf("Date: %v: Message: %s", currTime, message)),
 	})
 
-	resp = HelloResponse{ 
+	payload := HelloResponse{ 
 		ResponseId: respId.String(), 
 		Time: currTime,
-		Message: fmt.Sprintf("Hello %s: Filename: %s", req.UserId, fileName), 
-		Status: 200,
+		Message: fmt.Sprintf("Hello %s: Filename: %s", userId, fileName), 
+	}
+	b, err := json.Marshal(payload)
+	CheckError(err)
+
+	gatewayResp := events.APIGatewayProxyResponse{
+		StatusCode: 200,
+		Headers: map[string]string {
+			"Content-Type": "application/json",
+		},
+		Body: string(b),
 	}
 
-	return resp, nil
+	return gatewayResp, nil
 }
 
 func main() {
