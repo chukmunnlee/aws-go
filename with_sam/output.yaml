@@ -1,0 +1,56 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'My first SAM App
+
+  '
+Resources:
+  HelloGate:
+    Properties:
+      Cors:
+        AllowOrigin: '*'
+      DefinitionBody:
+        info:
+          title:
+            Ref: AWS::StackName
+        paths:
+          /hello:
+            get:
+              parameters:
+              - in: query
+                name: userId
+                required: true
+                type: string
+              - in: query
+                name: message
+                required: true
+                type: string
+              x-amazon-apigetway-integration:
+                httpMethod: GET
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03/31/functions/${HelloS3.Arn}/invocations
+        swagger: 2.0
+      EndpointConfiguration: REGIONAL
+      MethodSettings:
+        HttpMethod: GET
+      StageName: prod
+    Type: AWS::Serverless::Api
+  HelloS3:
+    Properties:
+      CodeUri: s3://c0ffeebabe/96bebe9d69d208e6c7a0d6f73120b70b
+      Environment:
+        Variables:
+          HELLO_AWS_REGION: ap-southeast-1
+          HELLO_BUCKET_NAME: telokanson
+      Events:
+        HelloEvent:
+          Properties:
+            Method: GET
+            Path: /hello
+            RestApiId:
+              Ref: HelloGate
+          Type: Api
+      Handler: hello
+      Role: arn:aws:iam::077637609346:role/S3-Admin-Access
+      Runtime: go1.x
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

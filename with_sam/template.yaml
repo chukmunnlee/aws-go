@@ -11,16 +11,50 @@ Resources:
       Properties:
          Runtime: go1.x
          Handler: hello
+         CodeUri: ./hello
          #Runtime: nodejs8.10
          #Handler: index.handler
          Environment:
             Variables:
                HELLO_AWS_REGION: ap-southeast-1
                HELLO_BUCKET_NAME: telokanson
-         Role: S3-Admin-Access
+         Role: "arn:aws:iam::077637609346:role/S3-Admin-Access"
          Events:
             HelloEvent:
                Type: Api
                Properties:
                   Path: /hello
                   Method: GET
+                  RestApiId:
+                     Ref: HelloGate
+
+   HelloGate:
+      Type: AWS::Serverless::Api
+      Properties:
+         StageName: prod
+         EndpointConfiguration: REGIONAL
+         MethodSettings:
+            HttpMethod: GET
+         Cors:
+            AllowOrigin: "*"
+         DefinitionBody:
+            swagger: 2.0
+            info:
+               title: !Ref AWS::StackName
+            paths:
+               "/hello":
+                  get:
+                     parameters:
+                        - name: "userId"
+                          in: "query"
+                          required: true
+                          type: "string"
+                        - name: "message"
+                          in: "query"
+                          required: true
+                          type: "string"
+                     x-amazon-apigetway-integration:
+                        uri: 
+                           Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03/31/functions/${HelloS3.Arn}/invocations"
+                        httpMethod: GET
+                        type: aws_proxy
