@@ -36,7 +36,7 @@ Resources:
     Type: AWS::Serverless::Api
   HelloS3:
     Properties:
-      CodeUri: s3://c0ffeebabe/96bebe9d69d208e6c7a0d6f73120b70b
+      CodeUri: s3://telokanson/def97470ff2c8c92ce5f8f0a92e07a99
       Environment:
         Variables:
           HELLO_AWS_REGION: ap-southeast-1
@@ -50,7 +50,7 @@ Resources:
               Ref: HelloGate
           Type: Api
       Handler: hello
-      Role: arn:aws:iam::077637609346:role/S3-Admin-Access
+      Role: arn:aws:iam::077637609346:role/LambdaS3FullAccess
       Runtime: go1.x
     Type: AWS::Serverless::Function
 Transform: AWS::Serverless-2016-10-31

@@ -1,0 +1,137 @@
+{
+    "StackEvents": [
+        {
+            "StackId": "arn:aws:cloudformation:ap-southeast-1:077637609346:stack/hello-stack/2c2abdc0-e344-11e8-872b-02599b2cf6e6",
+            "EventId": "38ee9040-e344-11e8-8a9d-06e9ec8dfb16",
+            "StackName": "hello-stack",
+            "LogicalResourceId": "hello-stack",
+            "PhysicalResourceId": "arn:aws:cloudformation:ap-southeast-1:077637609346:stack/hello-stack/2c2abdc0-e344-11e8-872b-02599b2cf6e6",
+            "ResourceType": "AWS::CloudFormation::Stack",
+            "Timestamp": "2018-11-08T10:51:18.710Z",
+            "ResourceStatus": "ROLLBACK_COMPLETE"
+        },
+        {
+            "StackId": "arn:aws:cloudformation:ap-southeast-1:077637609346:stack/hello-stack/2c2abdc0-e344-11e8-872b-02599b2cf6e6",
+            "EventId": "HelloS3-DELETE_COMPLETE-2018-11-08T10:51:18.023Z",
+            "StackName": "hello-stack",
+            "LogicalResourceId": "HelloS3",
+            "PhysicalResourceId": "hello-stack-HelloS3-UCCJKFKLOL9Y",
+            "ResourceType": "AWS::Lambda::Function",
+            "Timestamp": "2018-11-08T10:51:18.023Z",
+            "ResourceStatus": "DELETE_COMPLETE",
+            "ResourceProperties": "{\"Role\":\"arn:aws:iam::077637609346:role/LambdaS3FullAccess\",\"Runtime\":\"go1.x\",\"Environment\":{\"Variables\":{\"HELLO_BUCKET_NAME\":\"telokanson\",\"HELLO_AWS_REGION\":\"ap-southeast-1\"}},\"Handler\":\"hello\",\"Code\":{\"S3Bucket\":\"telokanson\",\"S3Key\":\"def97470ff2c8c92ce5f8f0a92e07a99\"},\"Tags\":[{\"Value\":\"SAM\",\"Key\":\"lambda:createdBy\"}]}"
+        },
+        {
+            "StackId": "arn:aws:cloudformation:ap-southeast-1:077637609346:stack/hello-stack/2c2abdc0-e344-11e8-872b-02599b2cf6e6",
+            "EventId": "HelloS3-DELETE_IN_PROGRESS-2018-11-08T10:51:17.630Z",
+            "StackName": "hello-stack",
+            "LogicalResourceId": "HelloS3",
+            "PhysicalResourceId": "hello-stack-HelloS3-UCCJKFKLOL9Y",
+            "ResourceType": "AWS::Lambda::Function",
+            "Timestamp": "2018-11-08T10:51:17.630Z",
+            "ResourceStatus": "DELETE_IN_PROGRESS",
+            "ResourceProperties": "{\"Role\":\"arn:aws:iam::077637609346:role/LambdaS3FullAccess\",\"Runtime\":\"go1.x\",\"Environment\":{\"Variables\":{\"HELLO_BUCKET_NAME\":\"telokanson\",\"HELLO_AWS_REGION\":\"ap-southeast-1\"}},\"Handler\":\"hello\",\"Code\":{\"S3Bucket\":\"telokanson\",\"S3Key\":\"def97470ff2c8c92ce5f8f0a92e07a99\"},\"Tags\":[{\"Value\":\"SAM\",\"Key\":\"lambda:createdBy\"}]}"
+        },
+        {
+            "StackId": "arn:aws:cloudformation:ap-southeast-1:077637609346:stack/hello-stack/2c2abdc0-e344-11e8-872b-02599b2cf6e6",
+            "EventId": "HelloGate-DELETE_COMPLETE-2018-11-08T10:51:16.464Z",
+            "StackName": "hello-stack",
+            "LogicalResourceId": "HelloGate",
+            "PhysicalResourceId": "",
+            "ResourceType": "AWS::ApiGateway::RestApi",
+            "Timestamp": "2018-11-08T10:51:16.464Z",
+            "ResourceStatus": "DELETE_COMPLETE",
+            "ResourceProperties": "{\"Parameters\":{\"endpointConfigurationTypes\":\"REGIONAL\"},\"EndpointConfiguration\":{\"Types\":[\"REGIONAL\"]},\"Body\":{\"paths\":{\"/hello\":{\"get\":{\"x-amazon-apigetway-integration\":{\"httpMethod\":\"GET\",\"type\":\"aws_proxy\",\"uri\":\"arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03/31/functions/arn:aws:lambda:ap-southeast-1:077637609346:function:hello-stack-HelloS3-UCCJKFKLOL9Y/invocations\"},\"parameters\":[{\"in\":\"query\",\"name\":\"userId\",\"type\":\"string\",\"required\":true},{\"in\":\"query\",\"name\":\"message\",\"type\":\"string\",\"required\":true}]},\"options\":{\"summary\":\"CORS support\",\"produces\":[\"application/json\"],\"responses\":{\"200\":{\"headers\":{\"Access-Control-Allow-Origin\":{\"type\":\"string\"},\"Access-Control-Allow-Methods\":{\"type\":\"string\"}},\"description\":\"Default response for CORS method\"}},\"x-amazon-apigateway-integration\":{\"requestTemplates\":{\"application/json\":\"{\\n  \\\"statusCode\\\" : 200\\n}\\n\"},\"responses\":{\"default\":{\"responseParameters\":{\"method.response.header.Access-Control-Allow-Methods\":\"'GET,OPTIONS'\",\"method.response.header.Access-Control-Allow-Origin\":\"*\"},\"responseTemplates\":{\"application/json\":\"{}\\n\"},\"statusCode\":\"200\"}},\"type\":\"mock\"},\"consumes\":[\"application/json\"]}}},\"swagger\":2.0,\"info\":{\"title\":\"hello-stack\"}}}"
+        },
+        {
+            "StackId": "arn:aws:cloudformation:ap-southeast-1:077637609346:stack/hello-stack/2c2abdc0-e344-11e8-872b-02599b2cf6e6",
+            "EventId": "34fbab30-e344-11e8-ae5d-0ad1e4b7cf92",
+            "StackName": "hello-stack",
+            "LogicalResourceId": "hello-stack",
+            "PhysicalResourceId": "arn:aws:cloudformation:ap-southeast-1:077637609346:stack/hello-stack/2c2abdc0-e344-11e8-872b-02599b2cf6e6",
+            "ResourceType": "AWS::CloudFormation::Stack",
+            "Timestamp": "2018-11-08T10:51:12.084Z",
+            "ResourceStatus": "ROLLBACK_IN_PROGRESS",
+            "ResourceStatusReason": "The following resource(s) failed to create: [HelloGate]. . Rollback requested by user."
+        },
+        {
+            "StackId": "arn:aws:cloudformation:ap-southeast-1:077637609346:stack/hello-stack/2c2abdc0-e344-11e8-872b-02599b2cf6e6",
+            "EventId": "HelloGate-CREATE_FAILED-2018-11-08T10:51:11.409Z",
+            "StackName": "hello-stack",
+            "LogicalResourceId": "HelloGate",
+            "PhysicalResourceId": "",
+            "ResourceType": "AWS::ApiGateway::RestApi",
+            "Timestamp": "2018-11-08T10:51:11.409Z",
+            "ResourceStatus": "CREATE_FAILED",
+            "ResourceStatusReason": "Errors found during import:\n\tUnable to put integration response on 'OPTIONS' for resource at path '/hello': Invalid mapping expression specified: Validation Result: warnings : [], errors : [Invalid mapping expression specified: *]\nAdditionally, these warnings were found:\n\tNo responses specified for 'GET /hello' (Service: AmazonApiGateway; Status Code: 400; Error Code: BadRequestException; Request ID: 346363b8-e344-11e8-babe-7774dc68015a)",
+            "ResourceProperties": "{\"Parameters\":{\"endpointConfigurationTypes\":\"REGIONAL\"},\"EndpointConfiguration\":{\"Types\":[\"REGIONAL\"]},\"Body\":{\"paths\":{\"/hello\":{\"get\":{\"x-amazon-apigetway-integration\":{\"httpMethod\":\"GET\",\"type\":\"aws_proxy\",\"uri\":\"arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03/31/functions/arn:aws:lambda:ap-southeast-1:077637609346:function:hello-stack-HelloS3-UCCJKFKLOL9Y/invocations\"},\"parameters\":[{\"in\":\"query\",\"name\":\"userId\",\"type\":\"string\",\"required\":true},{\"in\":\"query\",\"name\":\"message\",\"type\":\"string\",\"required\":true}]},\"options\":{\"summary\":\"CORS support\",\"produces\":[\"application/json\"],\"responses\":{\"200\":{\"headers\":{\"Access-Control-Allow-Origin\":{\"type\":\"string\"},\"Access-Control-Allow-Methods\":{\"type\":\"string\"}},\"description\":\"Default response for CORS method\"}},\"x-amazon-apigateway-integration\":{\"requestTemplates\":{\"application/json\":\"{\\n  \\\"statusCode\\\" : 200\\n}\\n\"},\"responses\":{\"default\":{\"responseParameters\":{\"method.response.header.Access-Control-Allow-Methods\":\"'GET,OPTIONS'\",\"method.response.header.Access-Control-Allow-Origin\":\"*\"},\"responseTemplates\":{\"application/json\":\"{}\\n\"},\"statusCode\":\"200\"}},\"type\":\"mock\"},\"consumes\":[\"application/json\"]}}},\"swagger\":2.0,\"info\":{\"title\":\"hello-stack\"}}}"
+        },
+        {
+            "StackId": "arn:aws:cloudformation:ap-southeast-1:077637609346:stack/hello-stack/2c2abdc0-e344-11e8-872b-02599b2cf6e6",
+            "EventId": "HelloGate-CREATE_IN_PROGRESS-2018-11-08T10:51:10.679Z",
+            "StackName": "hello-stack",
+            "LogicalResourceId": "HelloGate",
+            "PhysicalResourceId": "",
+            "ResourceType": "AWS::ApiGateway::RestApi",
+            "Timestamp": "2018-11-08T10:51:10.679Z",
+            "ResourceStatus": "CREATE_IN_PROGRESS",
+            "ResourceProperties": "{\"Parameters\":{\"endpointConfigurationTypes\":\"REGIONAL\"},\"EndpointConfiguration\":{\"Types\":[\"REGIONAL\"]},\"Body\":{\"paths\":{\"/hello\":{\"get\":{\"x-amazon-apigetway-integration\":{\"httpMethod\":\"GET\",\"type\":\"aws_proxy\",\"uri\":\"arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03/31/functions/arn:aws:lambda:ap-southeast-1:077637609346:function:hello-stack-HelloS3-UCCJKFKLOL9Y/invocations\"},\"parameters\":[{\"in\":\"query\",\"name\":\"userId\",\"type\":\"string\",\"required\":true},{\"in\":\"query\",\"name\":\"message\",\"type\":\"string\",\"required\":true}]},\"options\":{\"summary\":\"CORS support\",\"produces\":[\"application/json\"],\"responses\":{\"200\":{\"headers\":{\"Access-Control-Allow-Origin\":{\"type\":\"string\"},\"Access-Control-Allow-Methods\":{\"type\":\"string\"}},\"description\":\"Default response for CORS method\"}},\"x-amazon-apigateway-integration\":{\"requestTemplates\":{\"application/json\":\"{\\n  \\\"statusCode\\\" : 200\\n}\\n\"},\"responses\":{\"default\":{\"responseParameters\":{\"method.response.header.Access-Control-Allow-Methods\":\"'GET,OPTIONS'\",\"method.response.header.Access-Control-Allow-Origin\":\"*\"},\"responseTemplates\":{\"application/json\":\"{}\\n\"},\"statusCode\":\"200\"}},\"type\":\"mock\"},\"consumes\":[\"application/json\"]}}},\"swagger\":2.0,\"info\":{\"title\":\"hello-stack\"}}}"
+        },
+        {
+            "StackId": "arn:aws:cloudformation:ap-southeast-1:077637609346:stack/hello-stack/2c2abdc0-e344-11e8-872b-02599b2cf6e6",
+            "EventId": "HelloS3-CREATE_COMPLETE-2018-11-08T10:51:07.791Z",
+            "StackName": "hello-stack",
+            "LogicalResourceId": "HelloS3",
+            "PhysicalResourceId": "hello-stack-HelloS3-UCCJKFKLOL9Y",
+            "ResourceType": "AWS::Lambda::Function",
+            "Timestamp": "2018-11-08T10:51:07.791Z",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "ResourceProperties": "{\"Role\":\"arn:aws:iam::077637609346:role/LambdaS3FullAccess\",\"Runtime\":\"go1.x\",\"Environment\":{\"Variables\":{\"HELLO_BUCKET_NAME\":\"telokanson\",\"HELLO_AWS_REGION\":\"ap-southeast-1\"}},\"Handler\":\"hello\",\"Code\":{\"S3Bucket\":\"telokanson\",\"S3Key\":\"def97470ff2c8c92ce5f8f0a92e07a99\"},\"Tags\":[{\"Value\":\"SAM\",\"Key\":\"lambda:createdBy\"}]}"
+        },
+        {
+            "StackId": "arn:aws:cloudformation:ap-southeast-1:077637609346:stack/hello-stack/2c2abdc0-e344-11e8-872b-02599b2cf6e6",
+            "EventId": "HelloS3-CREATE_IN_PROGRESS-2018-11-08T10:51:07.602Z",
+            "StackName": "hello-stack",
+            "LogicalResourceId": "HelloS3",
+            "PhysicalResourceId": "hello-stack-HelloS3-UCCJKFKLOL9Y",
+            "ResourceType": "AWS::Lambda::Function",
+            "Timestamp": "2018-11-08T10:51:07.602Z",
+            "ResourceStatus": "CREATE_IN_PROGRESS",
+            "ResourceStatusReason": "Resource creation Initiated",
+            "ResourceProperties": "{\"Role\":\"arn:aws:iam::077637609346:role/LambdaS3FullAccess\",\"Runtime\":\"go1.x\",\"Environment\":{\"Variables\":{\"HELLO_BUCKET_NAME\":\"telokanson\",\"HELLO_AWS_REGION\":\"ap-southeast-1\"}},\"Handler\":\"hello\",\"Code\":{\"S3Bucket\":\"telokanson\",\"S3Key\":\"def97470ff2c8c92ce5f8f0a92e07a99\"},\"Tags\":[{\"Value\":\"SAM\",\"Key\":\"lambda:createdBy\"}]}"
+        },
+        {
+            "StackId": "arn:aws:cloudformation:ap-southeast-1:077637609346:stack/hello-stack/2c2abdc0-e344-11e8-872b-02599b2cf6e6",
+            "EventId": "HelloS3-CREATE_IN_PROGRESS-2018-11-08T10:51:06.180Z",
+            "StackName": "hello-stack",
+            "LogicalResourceId": "HelloS3",
+            "PhysicalResourceId": "",
+            "ResourceType": "AWS::Lambda::Function",
+            "Timestamp": "2018-11-08T10:51:06.180Z",
+            "ResourceStatus": "CREATE_IN_PROGRESS",
+            "ResourceProperties": "{\"Role\":\"arn:aws:iam::077637609346:role/LambdaS3FullAccess\",\"Runtime\":\"go1.x\",\"Environment\":{\"Variables\":{\"HELLO_BUCKET_NAME\":\"telokanson\",\"HELLO_AWS_REGION\":\"ap-southeast-1\"}},\"Handler\":\"hello\",\"Code\":{\"S3Bucket\":\"telokanson\",\"S3Key\":\"def97470ff2c8c92ce5f8f0a92e07a99\"},\"Tags\":[{\"Value\":\"SAM\",\"Key\":\"lambda:createdBy\"}]}"
+        },
+        {
+            "StackId": "arn:aws:cloudformation:ap-southeast-1:077637609346:stack/hello-stack/2c2abdc0-e344-11e8-872b-02599b2cf6e6",
+            "EventId": "2f543850-e344-11e8-ae5d-0ad1e4b7cf92",
+            "StackName": "hello-stack",
+            "LogicalResourceId": "hello-stack",
+            "PhysicalResourceId": "arn:aws:cloudformation:ap-southeast-1:077637609346:stack/hello-stack/2c2abdc0-e344-11e8-872b-02599b2cf6e6",
+            "ResourceType": "AWS::CloudFormation::Stack",
+            "Timestamp": "2018-11-08T10:51:02.595Z",
+            "ResourceStatus": "CREATE_IN_PROGRESS",
+            "ResourceStatusReason": "User Initiated"
+        },
+        {
+            "StackId": "arn:aws:cloudformation:ap-southeast-1:077637609346:stack/hello-stack/2c2abdc0-e344-11e8-872b-02599b2cf6e6",
+            "EventId": "2c2a4890-e344-11e8-872b-02599b2cf6e6",
+            "StackName": "hello-stack",
+            "LogicalResourceId": "hello-stack",
+            "PhysicalResourceId": "arn:aws:cloudformation:ap-southeast-1:077637609346:stack/hello-stack/2c2abdc0-e344-11e8-872b-02599b2cf6e6",
+            "ResourceType": "AWS::CloudFormation::Stack",
+            "Timestamp": "2018-11-08T10:50:57.328Z",
+            "ResourceStatus": "REVIEW_IN_PROGRESS",
+            "ResourceStatusReason": "User Initiated"
+        }
+    ]
+}

@@ -18,7 +18,7 @@ Resources:
             Variables:
                HELLO_AWS_REGION: ap-southeast-1
                HELLO_BUCKET_NAME: telokanson
-         Role: "arn:aws:iam::077637609346:role/S3-Admin-Access"
+         Role: "arn:aws:iam::077637609346:role/LambdaS3FullAccess"
          Events:
             HelloEvent:
                Type: Api
